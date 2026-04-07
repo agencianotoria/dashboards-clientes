@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Cliente | Atualizações do Projeto</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#F8F9FA', // Fundo bem claro
+                            card: '#FFFFFF',
+                            green: '#E6F4EA',
+                            greenText: '#1E8E3E',
+                            yellow: '#FEF7E0',
+                            yellowText: '#B06000',
+                            blue: '#E8F0FE',
+                            blueText: '#1A73E8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: theme('colors.pastel.bg');
+            color: #333;
+        }
+        
+        /* Suaviza a barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pb-12">
+
+    <!-- Header do Cliente -->
+    <header class="bg-white shadow-sm border-b border-gray-100 pt-8 pb-6 px-4 sm:px-6 lg:px-8 mb-8 sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <!-- Logotipo Placeholder -->
+                <div class="w-14 h-14 rounded-2xl bg-pastel-blue flex items-center justify-center text-pastel-blueText shadow-sm">
+                    <!-- COLE O CÓDIGO DO SEU SVG INLINE LOGO ABAIXO SUBSTITUINDO ESTE SVG -->
+                    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M512,102.4L512,409.6C512,466.116 466.116,512 409.6,512L102.4,512C45.884,512 0,466.116 0,409.6L0,102.4C0,45.884 45.884,0 102.4,0L409.6,0C466.116,0 512,45.884 512,102.4Z" style="fill:rgb(177,111,87);"/>
+    <g transform="matrix(1.844838,0,0,1.844838,115.211196,77.696417)">
+        <path d="M150.08,129C150.19,97.67 149.83,66.34 150.33,35C150.5,23.29 151.44,11.61 152.63,0L143.78,0C145.654,19.609 146.505,39.302 146.33,59C146.33,100.38 146.39,141.75 146.33,183.12C110.45,122.15 74.9,61 39.1,0L0,0C2,18.93 2.29,38 2.33,57C2.22,91 2.58,125 2.08,159C1.85,170.43 1,181.85 0,193.24L8.64,193.24C6.77,174.24 6.34,155.11 6.33,136.01C6.33,94.01 6.27,52.01 6.33,10.01C42.123,71.037 77.79,132.133 113.33,193.3L152.57,193.3C150.22,171.92 150,150.44 150.08,129Z" style="fill:rgb(242,242,242);fill-rule:nonzero;stroke:rgb(242,242,242);stroke-width:9px;"/>
+    </g>
+</svg>
+
+                </div>
+                <div>
+                    <h1 class="text-2xl font-semibold text-gray-800 tracking-tight" id="client-name">A carregar...</h1>
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                        <i class="ph ph-buildings"></i>
+                        <span id="project-name">A carregar...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:items-end bg-gray-50 px-4 py-2 rounded-xl border border-gray-100">
+                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Estado do Projeto</span>
+                <div id="project-status-indicator" class="flex items-center gap-2 mt-1">
+                    <span class="text-sm font-medium text-gray-400">A carregar...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Área Principal / Linha do Tempo -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                <i class="ph ph-clock-counter-clockwise text-gray-400"></i>
+                Histórico de Atualizações
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">Acompanhe tudo o que estamos fazendo para o fortalecimento digital da sua marca.</p>
+        </div>
+
+        <!-- Painel de Ferramentas: Busca e Resumo -->
+        <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <!-- Barra de Pesquisa -->
+            <div class="relative w-full max-w-md">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                </div>
+                <input type="text" id="search-input" class="block w-full pl-11 pr-4 py-3 border border-gray-100 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pastel-blue/50 focus:border-pastel-blue text-sm transition-all shadow-sm" placeholder="Buscar plataforma, status ou palavra-chave...">
+            </div>
+            
+            <!-- Resumo de Produtividade -->
+            <div class="flex items-center gap-3" id="task-summary">
+                <!-- Injetado via JS -->
+            </div>
+        </div>
+
+        <!-- Container da Timeline -->
+        <div class="relative border-l-2 border-gray-200 ml-3 md:ml-4" id="timeline-container">
+            <!-- Os itens serão injetados aqui pelo JavaScript -->
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 pb-4 border-t border-gray-100 text-center">
+        <p class="text-sm text-gray-500">
+            &copy; <span id="current-year"></span> Notória Marketing. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <!-- Script de Dados e Renderização -->
+    <script>
+        // 1. Banco de Dados Incorporado (estilo JSON)
+        const dashboardData = {
+            "clientInfo": {
+                "name": "Empresa Cliente Fictícia",
+                "project": "Hospedagem",
+                "status": "ativo"
+            },
+            "updatesData": [
+                {
+                    "id": 1,
+                    "date": "2023-11-10",
+                    "platform": "Meta Ads",
+                    "description": "Criação e lançamento da nova campanha de remarketing focada em carrinhos abandonados. Otimização dos públicos semelhantes (Lookalike 1%).",
+                    "status": "Concluído",
+                    
+                    "link": {
+                        // AQUI ABAIXO, DENTRO DAS ASPAS PODE COLOCAR O LINK E O TEXTO DO LINK 
+                        "url": "",
+                        "text": ""
+                    }
+                },
+                {
+                    "id": 2,
+                    "date": "2023-11-08",
+                    "platform": "Google Meu Negócio",
+                    "description": "Atualização das fotos da fachada e inclusão de novo horário de funcionamento para o feriado. Resposta aos últimos 5 comentários de clientes.",
+                    "status": "Concluído"
+                },
+                {
+                    "id": 3,
+                    "date": "2023-11-05",
+                    "platform": "Google Ads",
+                    "description": "Revisão dos termos de pesquisa para negativar palavras irrelevantes. Ajuste no orçamento diário das campanhas de fundo de funil.",
+                    "status": "Em Andamento",
+                    "link": {
+                        "url": "",
+                        "text": ""
+                    }
+                },
+                {
+                    "id": 4,
+                    "date": "2023-11-01",
+                    "platform": "Meta Ads",
+                    "description": "Testes A/B iniciados para os novos criativos em vídeo. A analisar o custo por clique (CPC) e taxa de conversão.",
+                    "status": "Em Andamento"
+                },
+                {
+                    "id": 5,
+                    "date": "2023-10-25",
+                    "platform": "Google Meu Negócio",
+                    "description": "Cadastro de novos produtos/serviços no catálogo do perfil, incluindo descrições otimizadas com palavras-chave locais.",
+                    "status": "Concluído"
+                }
+            ]
+        };
+
+        // 2. Funções Utilitárias
+
+        // Formatar data de YYYY-MM-DD para exibição amigável
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const date = new Date(dateString + 'T00:00:00'); // Evita problemas de fuso horário
+            return date.toLocaleDateString('pt-PT', options).replace(' de ', ' ');
+        }
+
+        // Definir as configurações visuais de cada plataforma
+        function getPlatformConfig(platformName) {
+            switch(platformName) {
+                case 'Meta Ads':
+                    return {
+                        icon: 'ri-meta-fill',
+                        color: 'text-blue-600',
+                        bg: 'bg-blue-50'
+                    };
+                case 'Google Ads':
+                    return {
+                        icon: 'ri-google-fill',
+                        color: 'text-red-500',
+                        bg: 'bg-red-50'
+                    };
+                case 'Google Meu Negócio':
+                    return {
+                        icon: 'ri-store-2-fill',
+                        color: 'text-blue-400',
+                        bg: 'bg-indigo-50'
+                    };
+                default:
+                    return {
+                        icon: 'ri-global-fill',
+                        color: 'text-gray-500',
+                        bg: 'bg-gray-100'
+                    };
+            }
+        }
+
+        // Definir estilo das tags de estado
+        function getStatusBadge(status) {
+            if (status === 'Concluido' || status === 'Concluído') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-green text-pastel-greenText">
+                            <i class="ph-fill ph-check-circle"></i> Concluído
+                        </span>`;
+            } else if (status === 'Em Andamento') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-yellow text-pastel-yellowText">
+                            <i class="ph-fill ph-spinner-gap animate-spin"></i> Em Andamento
+                        </span>`;
+            }
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">${status}</span>`;
+        }
+
+        // Função para renderizar o Resumo Rápido
+        function renderSummary(updates) {
+            const summaryContainer = document.getElementById('task-summary');
+            
+            const concluidos = updates.filter(u => u.status === 'Concluído' || u.status === 'Concluido').length;
+            const emAndamento = updates.filter(u => u.status === 'Em Andamento').length;
+
+            summaryContainer.innerHTML = `
+                <div class="bg-pastel-green/20 border border-pastel-green/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <span class="text-xs font-bold text-pastel-greenText">${concluidos}</span>
+                    <span class="text-xs font-medium text-pastel-greenText">Concluídas</span>
+                </div>
+                <div class="bg-pastel-yellow/20 border border-pastel-yellow/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <span class="text-xs font-bold text-pastel-yellowText">${emAndamento}</span>
+                    <span class="text-xs font-medium text-pastel-yellowText">Em Andamento</span>
+                </div>
+            `;
+        }
+
+        // Função para renderizar o estado geral do projeto
+        function renderProjectStatus(status) {
+            const container = document.getElementById('project-status-indicator');
+            const statusLower = status ? status.toLowerCase() : '';
+            
+            if (statusLower === 'ativo') {
+                container.innerHTML = `
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-700 capitalize">Ativo</span>
+                `;
+            } else if (statusLower === 'pausado') {
+                container.innerHTML = `
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-700 capitalize">Pausado</span>
+                `;
+            } else if (statusLower === 'finalizado') {
+                container.innerHTML = `
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-400"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-700 capitalize">Finalizado</span>
+                `;
+            } else {
+                container.innerHTML = `<span class="text-sm font-medium text-gray-700">${status || 'Desconhecido'}</span>`;
+            }
+        }
+
+        // 3. Função para renderizar a Timeline na tela
+        function renderDashboard(updates) {
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineContainer.innerHTML = ''; // Limpa o carregamento anterior, se houver
+            
+            // Tratamento caso a busca não retorne resultados
+            if (updates.length === 0) {
+                timelineContainer.innerHTML = `
+                    <div class="ml-6 p-4 bg-white border border-gray-100 rounded-xl text-gray-500 text-sm flex items-center gap-2 shadow-sm">
+                        <i class="ph ph-warning-circle text-lg text-pastel-yellowText"></i> Nenhuma atualização encontrada para esta busca.
+                    </div>`;
+                return;
+            }
+            
+            updates.forEach(update => {
+                const platformConfig = getPlatformConfig(update.platform);
+                const formattedDate = formatDate(update.date);
+                const statusBadge = getStatusBadge(update.status);
+                
+                // Verifica se há um link/anexo no item do banco de dados e se não está vazio
+                const hasValidLink = update.link && update.link.url.trim() !== "" && update.link.text.trim() !== "";
+                const linkHTML = hasValidLink ? `
+                    <div class="mt-4 mb-2">
+                        <a href="${update.link.url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-pastel-blueText bg-pastel-blue/40 px-3 py-2 rounded-lg hover:bg-pastel-blue hover:text-blue-800 transition-colors">
+                            <i class="ph ph-link"></i> ${update.link.text}
+                        </a>
+                    </div>
+                ` : '';
+
+                const updateHTML = `
+                    <div class="mb-10 ml-6 group">
+                        <!-- Ícone da bolinha na linha do tempo -->
+                        <span class="absolute flex items-center justify-center w-10 h-10 rounded-full -left-5 ring-4 ring-pastel-bg bg-white shadow-sm border border-gray-100 transition-transform duration-300 group-hover:scale-110">
+                            <i class="${platformConfig.icon} text-xl ${platformConfig.color}"></i>
+                        </span>
+                        
+                        <!-- Card de conteúdo -->
+                        <div class="p-5 md:p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-base font-semibold text-gray-800">${update.platform}</h3>
+                                </div>
+                                <time class="flex items-center gap-1 text-sm font-medium text-gray-500 bg-gray-50 px-2.5 py-1 rounded-md">
+                                    <i class="ph ph-calendar-blank"></i> ${formattedDate}
+                                </time>
+                            </div>
+                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                                ${update.description}
+                            </p>
+                            
+                            ${linkHTML}
+                            
+                            <div class="flex items-center justify-between mt-2 pt-4 border-t border-gray-50">
+                                ${statusBadge}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                timelineContainer.insertAdjacentHTML('beforeend', updateHTML);
+            });
+        }
+
+        // 4. Inicialização e Lógica de Busca
+        function initDashboard() {
+            // Atualizar o ano do copyright no rodapé automaticamente
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // ORDENAÇÃO AUTOMÁTICA: Pega as datas e organiza da mais nova para a mais velha
+            dashboardData.updatesData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Renderizar Cabeçalho
+            document.getElementById('client-name').textContent = dashboardData.clientInfo.name;
+            document.getElementById('project-name').textContent = dashboardData.clientInfo.project;
+            
+            // Renderizar Estado do Projeto
+            renderProjectStatus(dashboardData.clientInfo.status);
+
+            // Renderizar Resumo Rápido
+            renderSummary(dashboardData.updatesData);
+
+            // Renderizar a Timeline inicial
+            renderDashboard(dashboardData.updatesData);
+
+            // Adicionar evento de busca digitada (Busca em Tempo Real)
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                // Filtra os dados com base no termo digitado
+                const filteredUpdates = dashboardData.updatesData.filter(update => {
+                    // Junta todos os textos do card em uma única string invisível para buscar de uma vez
+                    const searchString = `${update.platform} ${update.description} ${update.status} ${formatDate(update.date)}`.toLowerCase();
+                    return searchString.includes(searchTerm);
+                });
+
+                // Re-renderiza a timeline com os dados filtrados
+                renderDashboard(filteredUpdates);
+            });
+        }
+
+        // Inicia a renderização assim que a página carrega
+        document.addEventListener('DOMContentLoaded', initDashboard);
+
+    </script>
+</body>
+</html>
