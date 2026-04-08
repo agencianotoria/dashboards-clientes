@@ -67,17 +67,15 @@
     <header class="bg-white shadow-sm border-b border-gray-100 pt-8 pb-6 px-4 sm:px-6 lg:px-8 mb-8 sticky top-0 z-10">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4">
-                <!-- Logotipo Placeholder -->
+                <!-- Logotipo -->
                 <div class="w-14 h-14 rounded-2xl bg-pastel-blue flex items-center justify-center text-pastel-blueText shadow-sm">
-                    <!-- COLE O CÓDIGO DO SEU SVG INLINE LOGO ABAIXO SUBSTITUINDO ESTE SVG -->
                     <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <path d="M512,102.4L512,409.6C512,466.116 466.116,512 409.6,512L102.4,512C45.884,512 0,466.116 0,409.6L0,102.4C0,45.884 45.884,0 102.4,0L409.6,0C466.116,0 512,45.884 512,102.4Z" style="fill:rgb(177,111,87);"/>
-    <g transform="matrix(1.844838,0,0,1.844838,115.211196,77.696417)">
-        <path d="M150.08,129C150.19,97.67 149.83,66.34 150.33,35C150.5,23.29 151.44,11.61 152.63,0L143.78,0C145.654,19.609 146.505,39.302 146.33,59C146.33,100.38 146.39,141.75 146.33,183.12C110.45,122.15 74.9,61 39.1,0L0,0C2,18.93 2.29,38 2.33,57C2.22,91 2.58,125 2.08,159C1.85,170.43 1,181.85 0,193.24L8.64,193.24C6.77,174.24 6.34,155.11 6.33,136.01C6.33,94.01 6.27,52.01 6.33,10.01C42.123,71.037 77.79,132.133 113.33,193.3L152.57,193.3C150.22,171.92 150,150.44 150.08,129Z" style="fill:rgb(242,242,242);fill-rule:nonzero;stroke:rgb(242,242,242);stroke-width:9px;"/>
-    </g>
-</svg>
-
+                    <svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                        <path d="M512,102.4L512,409.6C512,466.116 466.116,512 409.6,512L102.4,512C45.884,512 0,466.116 0,409.6L0,102.4C0,45.884 45.884,0 102.4,0L409.6,0C466.116,0 512,45.884 512,102.4Z" style="fill:rgb(177,111,87);"/>
+                        <g transform="matrix(1.844838,0,0,1.844838,115.211196,77.696417)">
+                            <path d="M150.08,129C150.19,97.67 149.83,66.34 150.33,35C150.5,23.29 151.44,11.61 152.63,0L143.78,0C145.654,19.609 146.505,39.302 146.33,59C146.33,100.38 146.39,141.75 146.33,183.12C110.45,122.15 74.9,61 39.1,0L0,0C2,18.93 2.29,38 2.33,57C2.22,91 2.58,125 2.08,159C1.85,170.43 1,181.85 0,193.24L8.64,193.24C6.77,174.24 6.34,155.11 6.33,136.01C6.33,94.01 6.27,52.01 6.33,10.01C42.123,71.037 77.79,132.133 113.33,193.3L152.57,193.3C150.22,171.92 150,150.44 150.08,129Z" style="fill:rgb(242,242,242);fill-rule:nonzero;stroke:rgb(242,242,242);stroke-width:9px;"/>
+                        </g>
+                    </svg>
                 </div>
                 <div>
                     <h1 class="text-2xl font-semibold text-gray-800 tracking-tight" id="client-name">A carregar...</h1>
@@ -138,119 +136,48 @@
 
     <!-- Script de Dados e Renderização -->
     <script>
-        // 1. Banco de Dados Incorporado (estilo JSON)
-        const dashboardData = {
+        // 1. URL DO SEU GOOGLE APPS SCRIPT (COLE DENTRO DAS ASPAS SIMPLES)
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLbtHQaKyaJ5vx0vlfDGOMRdmmRVtWo-mKqgs8jutqkgdK7itQ05_Bx9QbW9an1FJ7RQ/exec';
+
+        // 2. Dados do cabeçalho do cliente (Pode alterar aqui manualmente se precisar)
+        let dashboardData = {
             "clientInfo": {
-                "name": "Mary Home's",
-                "project": "Gestão de Airbnb",
+                "name": "Empresa Cliente",
+                "project": "Marketing Digital",
                 "status": "ativo"
             },
-            "updatesData": [
-                {
-                    "id": 1,
-                    "date": "2023-11-10",
-                    "platform": "Meta Ads",
-                    "description": "Criação e lançamento da nova campanha de remarketing focada em carrinhos abandonados. Otimização dos públicos semelhantes (Lookalike 1%).",
-                    "status": "Concluído",
-                    
-                    "link": {
-                        // AQUI ABAIXO, DENTRO DAS ASPAS PODE COLOCAR O LINK E O TEXTO DO LINK 
-                        "url": "",
-                        "text": ""
-                    }
-                },
-                {
-                    "id": 2,
-                    "date": "2023-11-08",
-                    "platform": "Google Meu Negócio",
-                    "description": "Atualização das fotos da fachada e inclusão de novo horário de funcionamento para o feriado. Resposta aos últimos 5 comentários de clientes.",
-                    "status": "Concluído"
-                },
-                {
-                    "id": 3,
-                    "date": "2023-11-05",
-                    "platform": "Google Ads",
-                    "description": "Revisão dos termos de pesquisa para negativar palavras irrelevantes. Ajuste no orçamento diário das campanhas de fundo de funil.",
-                    "status": "Em Andamento",
-                    "link": {
-                        "url": "",
-                        "text": ""
-                    }
-                },
-                {
-                    "id": 4,
-                    "date": "2023-11-01",
-                    "platform": "Meta Ads",
-                    "description": "Testes A/B iniciados para os novos criativos em vídeo. A analisar o custo por clique (CPC) e taxa de conversão.",
-                    "status": "Em Andamento"
-                },
-                {
-                    "id": 5,
-                    "date": "2023-10-25",
-                    "platform": "Google Meu Negócio",
-                    "description": "Cadastro de novos produtos/serviços no catálogo do perfil, incluindo descrições otimizadas com palavras-chave locais.",
-                    "status": "Concluído"
-                }
-            ]
+            "updatesData": [] 
         };
 
-        // 2. Funções Utilitárias
-
-        // Formatar data de YYYY-MM-DD para exibição amigável
+        // 3. Funções Utilitárias
         function formatDate(dateString) {
+            if (!dateString) return '';
+            const dataLimpa = dateString.split('T')[0];
             const options = { day: '2-digit', month: 'short', year: 'numeric' };
-            const date = new Date(dateString + 'T00:00:00'); // Evita problemas de fuso horário
+            const date = new Date(dataLimpa + 'T00:00:00'); 
             return date.toLocaleDateString('pt-PT', options).replace(' de ', ' ');
         }
 
-        // Definir as configurações visuais de cada plataforma
         function getPlatformConfig(platformName) {
             switch(platformName) {
-                case 'Meta Ads':
-                    return {
-                        icon: 'ri-meta-fill',
-                        color: 'text-blue-600',
-                        bg: 'bg-blue-50'
-                    };
-                case 'Google Ads':
-                    return {
-                        icon: 'ri-google-fill',
-                        color: 'text-red-500',
-                        bg: 'bg-red-50'
-                    };
-                case 'Google Meu Negócio':
-                    return {
-                        icon: 'ri-store-2-fill',
-                        color: 'text-blue-400',
-                        bg: 'bg-indigo-50'
-                    };
-                default:
-                    return {
-                        icon: 'ri-global-fill',
-                        color: 'text-gray-500',
-                        bg: 'bg-gray-100'
-                    };
+                case 'Meta Ads': return { icon: 'ri-meta-fill', color: 'text-blue-600', bg: 'bg-blue-50' };
+                case 'Google Ads': return { icon: 'ri-google-fill', color: 'text-red-500', bg: 'bg-red-50' };
+                case 'Google Meu Negócio': return { icon: 'ri-store-2-fill', color: 'text-blue-400', bg: 'bg-indigo-50' };
+                default: return { icon: 'ri-global-fill', color: 'text-gray-500', bg: 'bg-gray-100' };
             }
         }
 
-        // Definir estilo das tags de estado
         function getStatusBadge(status) {
             if (status === 'Concluido' || status === 'Concluído') {
-                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-green text-pastel-greenText">
-                            <i class="ph-fill ph-check-circle"></i> Concluído
-                        </span>`;
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-green text-pastel-greenText"><i class="ph-fill ph-check-circle"></i> Concluído</span>`;
             } else if (status === 'Em Andamento') {
-                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-yellow text-pastel-yellowText">
-                            <i class="ph-fill ph-spinner-gap animate-spin"></i> Em Andamento
-                        </span>`;
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-yellow text-pastel-yellowText"><i class="ph-fill ph-spinner-gap animate-spin"></i> Em Andamento</span>`;
             }
             return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">${status}</span>`;
         }
 
-        // Função para renderizar o Resumo Rápido
         function renderSummary(updates) {
             const summaryContainer = document.getElementById('task-summary');
-            
             const concluidos = updates.filter(u => u.status === 'Concluído' || u.status === 'Concluido').length;
             const emAndamento = updates.filter(u => u.status === 'Em Andamento').length;
 
@@ -266,49 +193,27 @@
             `;
         }
 
-        // Função para renderizar o estado geral do projeto
         function renderProjectStatus(status) {
             const container = document.getElementById('project-status-indicator');
             const statusLower = status ? status.toLowerCase() : '';
             
             if (statusLower === 'ativo') {
-                container.innerHTML = `
-                    <span class="relative flex h-2.5 w-2.5">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                    </span>
-                    <span class="text-sm font-medium text-gray-700 capitalize">Ativo</span>
-                `;
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Ativo</span>`;
             } else if (statusLower === 'pausado') {
-                container.innerHTML = `
-                    <span class="relative flex h-2.5 w-2.5">
-                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span>
-                    </span>
-                    <span class="text-sm font-medium text-gray-700 capitalize">Pausado</span>
-                `;
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Pausado</span>`;
             } else if (statusLower === 'finalizado') {
-                container.innerHTML = `
-                    <span class="relative flex h-2.5 w-2.5">
-                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-400"></span>
-                    </span>
-                    <span class="text-sm font-medium text-gray-700 capitalize">Finalizado</span>
-                `;
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-400"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Finalizado</span>`;
             } else {
                 container.innerHTML = `<span class="text-sm font-medium text-gray-700">${status || 'Desconhecido'}</span>`;
             }
         }
 
-        // 3. Função para renderizar a Timeline na tela
         function renderDashboard(updates) {
             const timelineContainer = document.getElementById('timeline-container');
-            timelineContainer.innerHTML = ''; // Limpa o carregamento anterior, se houver
+            timelineContainer.innerHTML = ''; 
             
-            // Tratamento caso a busca não retorne resultados
             if (updates.length === 0) {
-                timelineContainer.innerHTML = `
-                    <div class="ml-6 p-4 bg-white border border-gray-100 rounded-xl text-gray-500 text-sm flex items-center gap-2 shadow-sm">
-                        <i class="ph ph-warning-circle text-lg text-pastel-yellowText"></i> Nenhuma atualização encontrada para esta busca.
-                    </div>`;
+                timelineContainer.innerHTML = `<div class="ml-6 p-4 bg-white border border-gray-100 rounded-xl text-gray-500 text-sm flex items-center gap-2 shadow-sm"><i class="ph ph-warning-circle text-lg text-pastel-yellowText"></i> Nenhuma atualização encontrada.</div>`;
                 return;
             }
             
@@ -317,8 +222,7 @@
                 const formattedDate = formatDate(update.date);
                 const statusBadge = getStatusBadge(update.status);
                 
-                // Verifica se há um link/anexo no item do banco de dados e se não está vazio
-                const hasValidLink = update.link && update.link.url.trim() !== "" && update.link.text.trim() !== "";
+                const hasValidLink = update.link && update.link.url && update.link.url.trim() !== "" && update.link.text && update.link.text.trim() !== "";
                 const linkHTML = hasValidLink ? `
                     <div class="mt-4 mb-2">
                         <a href="${update.link.url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-pastel-blueText bg-pastel-blue/40 px-3 py-2 rounded-lg hover:bg-pastel-blue hover:text-blue-800 transition-colors">
@@ -329,12 +233,9 @@
 
                 const updateHTML = `
                     <div class="mb-10 ml-6 group">
-                        <!-- Ícone da bolinha na linha do tempo -->
                         <span class="absolute flex items-center justify-center w-10 h-10 rounded-full -left-5 ring-4 ring-pastel-bg bg-white shadow-sm border border-gray-100 transition-transform duration-300 group-hover:scale-110">
                             <i class="${platformConfig.icon} text-xl ${platformConfig.color}"></i>
                         </span>
-                        
-                        <!-- Card de conteúdo -->
                         <div class="p-5 md:p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                                 <div class="flex items-center gap-2">
@@ -344,63 +245,83 @@
                                     <i class="ph ph-calendar-blank"></i> ${formattedDate}
                                 </time>
                             </div>
-                            
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                                ${update.description}
-                            </p>
-                            
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${update.description}</p>
                             ${linkHTML}
-                            
                             <div class="flex items-center justify-between mt-2 pt-4 border-t border-gray-50">
                                 ${statusBadge}
                             </div>
                         </div>
                     </div>
                 `;
-                
                 timelineContainer.insertAdjacentHTML('beforeend', updateHTML);
             });
         }
 
-        // 4. Inicialização e Lógica de Busca
-        function initDashboard() {
-            // Atualizar o ano do copyright no rodapé automaticamente
+        // 4. Lógica de Busca e Inicialização da Tela
+        function configurarTela() {
             document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // ORDENAÇÃO AUTOMÁTICA: Pega as datas e organiza da mais nova para a mais velha
-            dashboardData.updatesData.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            // Renderizar Cabeçalho
             document.getElementById('client-name').textContent = dashboardData.clientInfo.name;
             document.getElementById('project-name').textContent = dashboardData.clientInfo.project;
             
-            // Renderizar Estado do Projeto
             renderProjectStatus(dashboardData.clientInfo.status);
-
-            // Renderizar Resumo Rápido
             renderSummary(dashboardData.updatesData);
-
-            // Renderizar a Timeline inicial
             renderDashboard(dashboardData.updatesData);
 
-            // Adicionar evento de busca digitada (Busca em Tempo Real)
+            // Barra de pesquisa
             document.getElementById('search-input').addEventListener('input', (e) => {
                 const searchTerm = e.target.value.toLowerCase();
-                
-                // Filtra os dados com base no termo digitado
                 const filteredUpdates = dashboardData.updatesData.filter(update => {
-                    // Junta todos os textos do card em uma única string invisível para buscar de uma vez
                     const searchString = `${update.platform} ${update.description} ${update.status} ${formatDate(update.date)}`.toLowerCase();
                     return searchString.includes(searchTerm);
                 });
-
-                // Re-renderiza a timeline com os dados filtrados
                 renderDashboard(filteredUpdates);
             });
         }
 
-        // Inicia a renderização assim que a página carrega
-        document.addEventListener('DOMContentLoaded', initDashboard);
+        // 5. Função que conecta com o Google Sheets
+        async function buscarDadosDaPlanilha() {
+            const timelineContainer = document.getElementById('timeline-container');
+            
+            // Mostra um aviso de carregamento enquanto busca os dados
+            timelineContainer.innerHTML = '<div class="ml-6 p-4 text-gray-500 text-sm flex items-center gap-2"><i class="ph ph-spinner-gap animate-spin text-xl"></i> Carregando atualizações do projeto...</div>';
+
+            try {
+                // Checa se o usuário colocou a URL
+                if(GOOGLE_SCRIPT_URL.includes('COLE_AQUI')) {
+                     timelineContainer.innerHTML = '<div class="ml-6 p-4 bg-yellow-50 border border-yellow-100 rounded-xl text-yellow-700 text-sm">⚠️ Você esqueceu de colocar o link do Google Script na linha 137 do seu código HTML.</div>';
+                     return;
+                }
+
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const dadosPlanilha = await response.json();
+
+                // Mapeia os dados da planilha para o formato que o HTML espera
+                dashboardData.updatesData = dadosPlanilha.map(linha => ({
+                    id: linha.id,
+                    date: linha.date,
+                    platform: linha.platform,
+                    description: linha.description,
+                    status: linha.status,
+                    link: {
+                        url: linha.link_url || "",
+                        text: linha.link_text || ""
+                    }
+                }));
+
+                // Ordena as atualizações da mais nova para a mais velha
+                dashboardData.updatesData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                // Constrói a tela com os dados novos
+                configurarTela();
+
+            } catch (erro) {
+                console.error("Erro ao puxar dados:", erro);
+                timelineContainer.innerHTML = '<div class="ml-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-500 text-sm">Erro ao carregar os dados. Verifique se publicou o script como "Qualquer pessoa" lá no Google.</div>';
+            }
+        }
+
+        // Inicia a busca na planilha assim que a página carrega
+        document.addEventListener('DOMContentLoaded', buscarDadosDaPlanilha);
 
     </script>
 </body>
