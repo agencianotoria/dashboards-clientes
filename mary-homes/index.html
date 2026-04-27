@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Cliente - Atualizações do Projeto</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="theme-color" content="#B16F57">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Portal">
+    <link rel="manifest" href="../manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://acompanhamento.notoriamarketing.com.br/images/apple-touch-icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {theme: {extend: {fontFamily: {sans: ['Outfit', 'sans-serif'],},colors: {pastel: {bg: '#F8F9FA', card: '#FFFFFF', green: '#E6F4EA', greenText: '#1E8E3E', yellow: '#FEF7E0', yellowText: '#B06000', blue: '#E8F0FE', blueText: '#1A73E8'}}}}}</script>
+    <style>
+        body {
+            background-color: theme('colors.pastel.bg');
+            color: #333;
+        }
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
+        .shimmer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: shimmerEffect 1.5s infinite;
+        }
+        @keyframes shimmerEffect {100% {transform: translateX(100%);}}
+    </style>
+</head>
+
+<body class="antialiased min-h-screen pb-12">
+    <header class="bg-[rgb(177,111,87)] shadow-sm pt-3 pb-3 px-4 sm:px-6 lg:px-8 sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto flex flex-row items-center justify-between">
+
+            <div class="flex items-center">
+                <img src="/images/notoria-logo.svg" alt="Notória Marketing"
+                    fetchpriority="high" loading="eager" class="h-8 w-auto transition-transform">
+            </div>
+
+            <div
+                class="flex items-center pr-1 py-1 pl-1 sm:pl-4 bg-white/10 text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full border border-white/20">
+
+                <div class="hidden sm:flex items-center gap-2 pr-4 border-r border-white/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        viewBox="0 0 256 256" class="text-white">
+                        <path
+                            d="M200,32H163.74a47.92,47.92 0 0 0-71.48,0H56A16,16,0 0 0,40,48V216a16,16,0 0 0,16,16H200a16,16,0 0 0,16-16V48A16,16,0 0 0,200,32ZM128,24a32,32,0 0 1,32,32H96A32,32,0 0 1,128,24Zm72,192H56V48H82.75A47.93,47.93,0 0 0,80,64v8a8,8,0 0 0,8,8h80a8,8,0 0 0,8-8V64a47.93,47.93,0 0 0-2.75-16H200V216ZM168,112H88a8,8,0 0 0,0,16h80a8,8,0 0 0,0-16Zm0,32H88a8,8,0 0 0,0,16h80a8,8,0 0 0,0-16Z">
+                        </path>
+                    </svg>
+                    <span>Dashboard</span>
+                </div>
+
+                <div class="flex items-center gap-1 pl-1 sm:pl-4">
+
+                    <div class="relative inline-block mr-2">
+                        <button id="btn-notifications"
+                            class="w-8 h-8 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer flex items-center justify-center">
+                            <i class="ph ph-bell text-lg"></i>
+                            <span id="notif-badge"
+                                class="absolute -top-[0px] -right-0.5 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center pl-[2px] hidden">0</span>
+                        </button>
+                        <div id="notif-panel"
+                                class="fixed left-4 right-4 top-20 sm:absolute sm:left-auto sm:right-0 sm:top-auto sm:mt-3 sm:w-80 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-50 overflow-hidden normal-case tracking-normal text-left">
+                                <div class="p-4 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+                                    <span class="text-sm font-semibold text-gray-800">Notificações</span>
+                                    <button id="close-notif" class="text-gray-400 hover:text-gray-600 cursor-pointer">
+                                        <i class="ph ph-x text-lg"></i>
+                                    </button>
+                                </div>
+                                <div id="notif-list" class="max-h-96 overflow-y-auto p-2 space-y-1">
+                                </div>
+                            </div>
+                        </div>
+
+                    <button id="btn-nav-up"
+                        class="w-8 h-8 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                        title="Subir página">
+                        <i class="ph ph-caret-up text-lg"></i>
+                    </button>
+                    <button id="btn-nav-down"
+                        class="w-8 h-8 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                        title="Descer página">
+                        <i class="ph ph-caret-down text-lg"></i>
+                    </button>
+                    <button id="btn-nav-reload"
+                        class="w-8 h-8 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                        title="Recarregar dados">
+                        <i class="ph ph-arrows-clockwise text-lg"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </header>
+    <header class="bg-gray-50 border-b border-gray-100 pt-8 pb-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="flex w-full items-center justify-between gap-4 mb-6">
+
+                <div class="flex flex-col gap-1">
+                    <h1 class="text-2xl font-semibold text-gray-800 tracking-tight" id="client-name">
+                        <div class="h-8 shimmer rounded-md w-48"></div>
+                    </h1>
+                    <div class="flex items-center gap-2 text-[16px] text-gray-500">
+                        <i class="ph ph-buildings"></i>
+                        <span id="project-name">
+                            <div class="h-5 shimmer rounded-md w-32"></div>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end text-right">
+                    <span class="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-1">Status do
+                        Projeto</span>
+                    <div id="project-status-indicator" class="flex items-center gap-2">
+                        <div class="h-5 shimmer rounded-md w-24"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+
+                    <div class="flex items-center gap-3 justify-center md:justify-start">
+                        <i class="ph ph-user text-gray-400 text-xl flex-shrink-0"></i>
+                        <div class="text-left w-full">
+                            <span
+                                class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider">Responsável</span>
+                            <span class="block text-sm font-medium text-gray-800" id="client-contact">
+                                <div class="h-4 shimmer rounded-md w-20 mt-1"></div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 justify-center md:justify-start">
+                        <i class="ph ph-calendar-blank text-gray-400 text-xl flex-shrink-0"></i>
+                        <div class="text-left w-full">
+                            <span class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider">Início do
+                                Projeto</span>
+                            <span class="block text-sm font-medium text-gray-800" id="project-start">
+                                <div class="h-4 shimmer rounded-md w-24 mt-1"></div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 justify-center md:justify-start">
+                        <i class="ph ph-flag text-gray-400 text-xl flex-shrink-0"></i>
+                        <div class="text-left w-full">
+                            <span class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider">Fase
+                                Atual</span>
+                            <span class="block text-sm font-medium text-gray-800" id="current-phase">
+                                <div class="h-4 shimmer rounded-md w-20 mt-1"></div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 justify-center md:justify-start">
+                        <i class="ph ph-handshake text-gray-400 text-xl flex-shrink-0"></i>
+                        <div class="text-left w-full">
+                            <span class="block text-[11px] font-medium text-gray-400 uppercase tracking-wider">Próxima
+                                Reunião</span>
+                            <span class="block text-sm font-medium text-gray-800" id="next-meeting">
+                                <div class="h-4 shimmer rounded-md w-24 mt-1"></div>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="#" target="_blank" id="btn-relatorio"
+                        class="flex items-center gap-4 p-3 rounded-xl border border-gray-100 bg-gray-50 hover:bg-white hover:border-pastel-blue/40 hover:shadow-sm transition-all group opacity-50 pointer-events-none">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-gray-200 text-gray-400 group-hover:text-pastel-blueText transition-colors">
+                            <i class="ph ph-chart-line-up text-xl"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-sm font-semibold text-gray-800">Relatório Mensal</span>
+                            <span class="text-[11px] text-gray-500 mt-0.5">Acompanhamento de métricas</span>
+                        </div>
+                    </a>
+
+                    <a href="#" target="_blank" id="btn-drive"
+                        class="flex items-center gap-4 p-3 rounded-xl border border-gray-100 bg-gray-50 hover:bg-white hover:border-pastel-blue/40 hover:shadow-sm transition-all group opacity-50 pointer-events-none">
+                        <div
+                            class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-gray-200 text-gray-400 group-hover:text-pastel-blueText transition-colors">
+                            <i class="ph ph-google-drive-logo text-xl"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-sm font-semibold text-gray-800">Google Drive</span>
+                            <span class="text-[11px] text-gray-500 mt-0.5">Acesso a todos os arquivos</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-800 mt-12 flex items-center gap-2">
+                <i class="ph ph-clock-counter-clockwise text-gray-400"></i>
+                Histórico de Atualizações
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">Acompanhe tudo o que estamos fazendo para o fortalecimento digital da
+                sua marca.</p>
+        </div>
+
+        <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="relative w-full max-w-md">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                </div>
+                <input type="text" id="search-input"
+                    class="block w-full pl-11 pr-10 py-3 border border-gray-100 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pastel-blue/50 focus:border-pastel-blue text-sm transition-all shadow-sm"
+                    placeholder="Buscar plataforma, status ou palavra-chave...">
+                <button type="button" id="clear-search"
+                    class="absolute inset-y-0 right-0 pr-4 flex items-center hidden text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
+                    <i class="ph ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-3" id="task-summary">
+            </div>
+        </div>
+
+        <div class="relative border-l-2 border-gray-200 ml-3 md:ml-4" id="timeline-container">
+        </div>
+    </main>
+    <footer class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 pb-4 border-t border-gray-100 text-center">
+        <p class="text-sm text-gray-500">
+            &copy; <span id="current-year"></span> Notória Marketing. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <script>
+        const BASE_URL = 'https://script.google.com/macros/s/AKfycbxtfWSNiN_PcknepcOuvz8Srg7qoHv7Bv0a46DC4DpT9yd8GHUYBUr6WhLF9ntLmiTN0w/exec';
+        // -------------------------------------------------------------------------
+        // -------------------------------------------------------------------------
+            // Alterar só o nome dentro das aspas, igual ao nome dado na aba da planilha @id @nome do cliente
+            const NOME_CLIENTE = 'Mary Homes';
+        // -------------------------------------------------------------------------
+        // -------------------------------------------------------------------------
+        const GOOGLE_SCRIPT_URL = `${BASE_URL}?cliente=${encodeURIComponent(NOME_CLIENTE)}`;
+
+        let dashboardData = {
+            clientInfo: {
+                name: "",
+                project: "",
+                status: "",
+                contact: "",
+                startDate: "",
+                phase: "",
+                nextMeeting: "",
+                linkRelatorio: "",
+                linkDrive: ""
+            },
+            updatesData: [],
+            notifications: []
+        };
+
+        function getPlatformConfig(platformName) {
+            switch (platformName) {
+                case 'Meta Ads':
+                    return { icon: `<svg height="22" width="22" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0866FF"><path d="M16.9197 4.5C15.0689 4.5 13.622 5.89404 12.3123 7.6649C10.5124 5.37323 9.00722 4.5 7.20593 4.5C3.53352 4.5 0.719727 9.27931 0.719727 14.3379C0.719727 17.5034 2.25116 19.5 4.81628 19.5C6.66249 19.5 7.99028 18.6296 10.3508 14.5034C10.3508 14.5034 11.3347 12.7658 12.0116 11.5689C12.2488 11.9518 12.4981 12.3639 12.7611 12.8069L13.868 14.669C16.0242 18.2772 17.2256 19.5 19.4025 19.5C21.9014 19.5 23.2921 17.4761 23.2921 14.2448C23.2921 8.94828 20.4149 4.5 16.9197 4.5ZM8.55076 13.3862C6.63697 16.3862 5.9749 17.0586 4.90938 17.0586C3.81283 17.0586 3.16111 16.0959 3.16111 14.3793C3.16111 10.7069 4.99214 6.95172 7.1749 6.95172C8.35692 6.95172 9.34471 7.63438 10.8577 9.80042C9.42105 12.0041 8.55076 13.3862 8.55076 13.3862ZM15.7737 13.0085L14.4502 10.8013C14.0921 10.2188 13.7489 9.6836 13.4177 9.19286C14.6105 7.35183 15.5944 6.43448 16.7646 6.43448C19.1956 6.43448 21.1404 10.0138 21.1404 14.4103C21.1404 16.0862 20.5915 17.0586 19.4542 17.0586C18.3641 17.0586 17.8434 16.3387 15.7737 13.0085Z"></path></svg>` };
+                case 'Google Ads':
+                    return { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid" viewBox="0 -13 256 256"><path fill="#FBBC04" d="M5.888 166.405 90.88 20.9c10.796 6.356 65.236 36.484 74.028 42.214L79.916 208.627c-9.295 12.28-85.804-23.587-74.028-42.23z"/><path fill="#4285F4" d="M250.084 166.402 165.092 20.906C153.21 1.132 127.62-6.054 106.601 5.625S79.182 42.462 91.064 63.119l84.992 145.514c11.882 19.765 37.473 26.95 58.492 15.272 20.1-11.68 27.418-37.73 15.536-57.486z"/><ellipse cx="42.664" cy="187.924" fill="#34A853" rx="42.664" ry="41.604"/></svg>` };
+                case 'Google Meu Negócio':
+                    return { icon: `<svg height="20" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0.43 1064 928.69"><linearGradient id="a" x1="0%" x2="99.999%" y1="49.999%" y2="49.999%"><stop offset=".03" stop-color="#4079d8"/><stop offset="1" stop-color="#4989f5"/></linearGradient><g fill="none" fill-rule="evenodd"><g fill-rule="nonzero"><rect fill="#4989f5" height="696.14" rx="36.88" width="931" x="53.45" y="232.98"/><path d="M936.81 227.75H100.06c-25.92 0-46.09 200.6-46.09 226.52L512.2 929.12h424.61c26-.071 47.059-21.13 47.13-47.13V274.87c-.077-25.996-21.134-47.049-47.13-47.12z" fill="url(#a)"/><path d="M266.03 349.56h266V.44H305.86z" fill="#3c4ba6"/><path d="M798.03 349.56h-266V.44H758.2zM984.45 66.62l.33 1.19c-.08-.42-.24-.81-.33-1.19z" fill="#7babf7"/><path d="M984.78 67.8l-.33-1.19C976.017 27.993 941.837.455 902.31.43H758.2L798 349.56h266z" fill="#3f51b5"/><path d="M79.61 66.62l-.33 1.19c.08-.42.24-.81.33-1.19z" fill="#7babf7"/><path d="M79.27 67.8l.33-1.19C88.033 27.993 122.213.455 161.74.43h144.12L266 349.56H0z" fill="#7babf7"/></g><path d="M266.48 349.47c0 73.412-59.513 132.925-132.925 132.925S.63 422.882.63 349.47z" fill="#709be0"/><path d="M532.33 349.47c0 73.412-59.513 132.925-132.925 132.925S266.48 422.882 266.48 349.47z" fill="#3c4ba6"/><path d="M798.18 349.47c0 73.412-59.513 132.925-132.925 132.925S532.33 422.882 532.33 349.47z" fill="#709be0"/><path d="M1064 349.47c0 73.412-59.513 132.925-132.925 132.925S798.15 422.882 798.15 349.47z" fill="#3c4ba6"/><path d="M931.08 709.6c-.47-6.33-1.25-12.11-2.36-19.49h-145c0 20.28 0 42.41-.08 62.7h84a73.05 73.05 0 0 1-30.75 46.89s0-.35-.06-.36a88 88 0 0 1-34 13.27 99.85 99.85 0 0 1-36.79-.16 91.9 91.9 0 0 1-34.31-14.87 95.72 95.72 0 0 1-33.73-43.1c-.52-1.35-1-2.71-1.49-4.09v-.15l.13-.1a93 93 0 0 1-.05-59.84A96.27 96.27 0 0 1 718.9 654c23.587-24.399 58.829-33.576 91.32-23.78a83 83 0 0 1 33.23 19.56l28.34-28.34c5-5.05 10.19-9.94 15-15.16a149.78 149.78 0 0 0-49.64-30.74 156.08 156.08 0 0 0-103.83-.91c-1.173.4-2.34.817-3.5 1.25A155.18 155.18 0 0 0 646 651a152.61 152.61 0 0 0-13.42 38.78c-16.052 79.772 32.623 158.294 111.21 179.4 25.69 6.88 53 6.71 78.89.83a139.88 139.88 0 0 0 63.14-32.81c18.64-17.15 32-40 39-64.27a179 179 0 0 0 6.26-63.33z" fill="#fff" fill-rule="nonzero"/></g></svg>` };
+                default:
+                    return { icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#BFC4CC" viewBox="0 0 256 256"><path d="M192,24H96A16,16,0,0,0,80,40V56H64A16,16,0,0,0,48,72V224a8,8,0,0,0,12.65,6.51L112,193.83l51.36,36.68A8,8,0,0,0,176,224V184.69l19.35,13.82A8,8,0,0,0,208,192V40A16,16,0,0,0,192,24Zm0,152.46L176,165V72a16,16,0,0,0-16-16H96V40h96Z"></path></svg>` };
+            }
+        }
+
+        function getStatusBadge(status) {
+            if (!status || status === 'undefined') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-500"><i class="ph-fill ph-clock-dashed"></i> Aguardando Status</span>`;
+            }
+
+            const statusLower = status.trim().toLowerCase();
+
+            if (statusLower === 'concluido' || statusLower === 'concluído') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-green text-pastel-greenText"><i class="ph-fill ph-check-circle"></i> Concluído</span>`;
+            } else if (statusLower === 'em andamento') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-yellow text-pastel-yellowText"><i class="ph-fill ph-spinner-gap animate-spin"></i> Em Andamento</span>`;
+            } else if (statusLower === 'em análise' || statusLower === 'em analise') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-blue text-pastel-blueText"><i class="ph-fill ph-magnifying-glass"></i> Em Análise</span>`;
+            } else if (statusLower === 'solicitado') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-700"><i class="ph-fill ph-paper-plane-tilt"></i> Solicitado</span>`;
+            }
+
+            return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">${status}</span>`;
+        }
+
+        function renderSummary(updates) {
+            const summaryContainer = document.getElementById('task-summary');
+            const concluidos = updates.filter(u => u.status === 'Concluído' || u.status === 'Concluido').length;
+            const emAndamento = updates.filter(u => u.status === 'Em Andamento').length;
+
+            summaryContainer.innerHTML = `
+                <div class="bg-pastel-green/20 border border-pastel-green/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <span class="text-xs font-bold text-pastel-greenText">${concluidos}</span>
+                    <span class="text-xs font-medium text-pastel-greenText">Concluídas</span>
+                </div>
+                <div class="bg-pastel-yellow/20 border border-pastel-yellow/30 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <span class="text-xs font-bold text-pastel-yellowText">${emAndamento}</span>
+                    <span class="text-xs font-medium text-pastel-yellowText">Em Andamento</span>
+                </div>
+            `;
+        }
+
+        function renderProjectStatus(status) {
+            const container = document.getElementById('project-status-indicator');
+            const statusLower = status ? status.toLowerCase() : '';
+
+            if (statusLower === 'ativo') {
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Ativo</span>`;
+            } else if (statusLower === 'pausado') {
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Pausado</span>`;
+            } else if (statusLower === 'finalizado') {
+                container.innerHTML = `<span class="relative flex h-2.5 w-2.5"><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-400"></span></span><span class="text-sm font-medium text-gray-700 capitalize">Finalizado</span>`;
+            } else {
+                container.innerHTML = `<span class="text-sm font-medium text-gray-700">${status || 'Desconhecido'}</span>`;
+            }
+        }
+
+        function renderDashboard(updates) {
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineContainer.innerHTML = '';
+
+            if (updates.length === 0) {
+                timelineContainer.innerHTML = `<div class="ml-6 p-4 bg-white border border-gray-100 rounded-xl text-gray-500 text-sm flex items-center gap-2 shadow-sm"><i class="ph ph-warning-circle text-lg text-pastel-yellowText"></i> Nenhuma atualização encontrada.</div>`;
+                return;
+            }
+
+            updates.forEach(update => {
+                const platformConfig = getPlatformConfig(update.platform);
+                const formattedDate = update.date;
+                const statusBadge = getStatusBadge(update.status);
+
+                const hasValidLink = update.link && update.link.url && update.link.url.trim() !== "";
+                const linkText = update.link.text && update.link.text.trim() !== "" ? update.link.text : "Acesso";
+
+                const linkHTML = hasValidLink ? `
+                    <a href="${update.link.url}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-pastel-blue/40 text-pastel-blueText hover:bg-pastel-blue hover:text-blue-800 transition-colors">
+                        <i class="ph ph-link"></i> ${linkText}
+                    </a>
+                ` : '';
+
+                const iconRender = platformConfig.icon.startsWith('<svg')
+                    ? `<div class="text-lg flex items-center justify-center">${platformConfig.icon}</div>`
+                    : `<i class="${platformConfig.icon} text-lg ${platformConfig.color}"></i>`;
+
+                const updateHTML = `
+                    <div class="mt-2 mb-6 ml-8 group">
+                        <span class="absolute flex items-center justify-center w-10 h-10 rounded-full -left-5 ring-4 ring-pastel-bg bg-white shadow-sm border border-gray-100 transition-transform duration-300 group-hover:scale-110">
+                            ${iconRender} 
+                        </span>
+                        <div class="p-4 md:p-5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <div class="flex justify-between items-center gap-4 mb-2">
+                                <h3 class="text-[15px] font-semibold text-gray-800">${update.platform}</h3>
+                                <time class="flex items-center gap-1.5 text-xs font-medium text-gray-400">
+                                    <i class="ph ph-calendar-blank text-sm"></i> ${formattedDate}
+                                </time>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${update.description}</p>
+                            <div class="flex items-center gap-2">
+                                ${linkHTML}
+                                ${statusBadge}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.insertAdjacentHTML('beforeend', updateHTML);
+            });
+        }
+
+        function parseDateBR(str) {
+            if (!str) return new Date();
+            const [d, m, y] = str.split('/');
+            return new Date(y, m - 1, d);
+        }
+
+        function renderNotifications() {
+            const list = document.getElementById('notif-list');
+            const badge = document.getElementById('notif-badge');
+            const readIds = JSON.parse(localStorage.getItem('notificacoes_lidas') || '[]');
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            const ativas = dashboardData.notifications.filter(n => {
+                const inicio = parseDateBR(n.start);
+                const fim = parseDateBR(n.end);
+                return hoje >= inicio && hoje <= fim;
+            });
+
+            const naoLidas = ativas.filter(n => !readIds.includes(n.id));
+
+            if (naoLidas.length > 0) {
+                badge.textContent = naoLidas.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            if (ativas.length === 0) {
+                list.innerHTML = '<p class="text-center py-8 text-gray-400 text-xs italic">Nenhuma novidade por aqui.</p>';
+                return;
+            }
+
+            list.innerHTML = ativas.map(n => `
+                <div class="p-3 rounded-xl border transition-colors ${readIds.includes(n.id) ? 'bg-white border-transparent hover:bg-gray-50' : 'bg-blue-50/30 border-blue-100/50'}">
+                    <div class="flex gap-3 items-start">
+                        <i class="ph-fill ${readIds.includes(n.id) ? 'ph-envelope-open text-gray-400' : 'ph-bell-ringing text-pastel-blueText'} text-lg flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="text-[14px] font-semibold text-gray-800 leading-snug">${n.title}</h4>
+                            <p class="text-[13px] text-gray-500 mt-1 leading-relaxed">${n.message}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function configurarTela() {
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('client-name').textContent = dashboardData.clientInfo.name || "A carregar...";
+            document.getElementById('project-name').textContent = dashboardData.clientInfo.project || "A carregar...";
+            document.getElementById('client-contact').textContent = dashboardData.clientInfo.contact || "-";
+            document.getElementById('project-start').textContent = dashboardData.clientInfo.startDate || "-";
+            document.getElementById('current-phase').textContent = dashboardData.clientInfo.phase || "-";
+            document.getElementById('next-meeting').textContent = dashboardData.clientInfo.nextMeeting || "-";
+
+            renderProjectStatus(dashboardData.clientInfo.status);
+            renderNotifications();
+            renderSummary(dashboardData.updatesData);
+            renderDashboard(dashboardData.updatesData);
+
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.getElementById('clear-search');
+
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+
+                if (searchTerm.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+
+                const filteredUpdates = dashboardData.updatesData.filter(update => {
+                    const searchString = `${update.platform} ${update.description} ${update.status} ${update.date}`.toLowerCase();
+                    return searchString.includes(searchTerm);
+                });
+                renderDashboard(filteredUpdates);
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.classList.add('hidden');
+                renderDashboard(dashboardData.updatesData);
+                searchInput.focus();
+            });
+
+            const btnRelatorio = document.getElementById('btn-relatorio');
+            if (dashboardData.clientInfo.linkRelatorio) {
+                btnRelatorio.href = dashboardData.clientInfo.linkRelatorio;
+                btnRelatorio.classList.remove('opacity-50', 'pointer-events-none');
+            }
+
+            const btnDrive = document.getElementById('btn-drive');
+            if (dashboardData.clientInfo.linkDrive) {
+                btnDrive.href = dashboardData.clientInfo.linkDrive;
+                btnDrive.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        async function buscarDadosDaPlanilha() {
+            const timelineContainer = document.getElementById('timeline-container');
+
+            const skeletonCard = `
+            <div class="mt-2 mb-6 ml-8 group">
+                <span class="absolute flex items-center justify-center w-10 h-10 rounded-full -left-5 ring-4 ring-pastel-bg bg-white shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="w-full h-full shimmer"></div>
+                </span>
+                <div class="p-4 md:p-5 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center gap-4 mb-3">
+                        <div class="h-5 shimmer rounded-md w-32"></div>
+                        <div class="h-4 shimmer rounded-md w-24"></div>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <div class="h-4 shimmer rounded-md w-full"></div>
+                        <div class="h-4 shimmer rounded-md w-4/5"></div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="h-6 shimmer rounded-full w-20"></div>
+                        <div class="h-6 shimmer rounded-full w-24"></div>
+                    </div>
+                </div>
+            </div>`;
+
+            timelineContainer.innerHTML = skeletonCard.repeat(3);
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const dadosPlanilha = await response.json();
+
+                if (dadosPlanilha.erro_interno) {
+                    timelineContainer.innerHTML = `<div class="ml-6 p-4 bg-red-50 text-red-500 text-sm">Erro: ${dadosPlanilha.erro_interno}</div>`;
+                    return;
+                }
+
+                dashboardData.clientInfo = dadosPlanilha.clientInfo;
+                dashboardData.notifications = dadosPlanilha.notifications || [];
+                dashboardData.updatesData = dadosPlanilha.updatesData.map(linha => ({
+                    id: linha.id,
+                    date: linha.date,
+                    platform: linha.platform,
+                    description: linha.description,
+                    status: linha.status,
+                    link: {
+                        url: linha.link_url || "",
+                        text: linha.link_text || ""
+                    }
+                }));
+
+                dashboardData.updatesData.sort((a, b) => {
+                    const [diaA, mesA, anoA] = a.date.split('/');
+                    const [diaB, mesB, anoB] = b.date.split('/');
+                    return new Date(anoB, mesB - 1, diaB) - new Date(anoA, mesA - 1, diaA);
+                });
+
+                configurarTela();
+
+            } catch (erro) {
+                timelineContainer.innerHTML = '<div class="ml-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-500 text-sm">Erro ao carregar os dados.</div>';
+            }
+        }
+
+        document.getElementById('btn-notifications').addEventListener('click', () => {
+            const panel = document.getElementById('notif-panel');
+            panel.classList.toggle('hidden');
+
+            if (!panel.classList.contains('hidden')) {
+                const idsAtivos = dashboardData.notifications.map(n => n.id);
+                localStorage.setItem('notificacoes_lidas', JSON.stringify(idsAtivos));
+                renderNotifications();
+            }
+        });
+
+        document.getElementById('close-notif').addEventListener('click', () => {
+            document.getElementById('notif-panel').classList.add('hidden');
+        });
+        document.getElementById('btn-nav-up').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        document.getElementById('btn-nav-down').addEventListener('click', () => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+        document.getElementById('btn-nav-reload').addEventListener('click', () => {
+            location.reload();
+        });
+        document.addEventListener('DOMContentLoaded', buscarDadosDaPlanilha);
+    </script>
+</body>
+
+</html>
