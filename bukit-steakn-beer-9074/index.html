@@ -4,22 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal do Cliente - Atualizações do Projeto</title>
+    <title>Diário de Otimizações</title>
     <meta name="robots" content="noindex, nofollow">
 
     <meta name="theme-color" content="#B16F57">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Portal">
-    <link rel="manifest" href="../manifest.json">
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <meta property="og:image" content="https://daily.notoriamarketing.com.br/og-image.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://acompanhamento.notoriamarketing.com.br/images/apple-touch-icon.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {theme: {extend: {fontFamily: {sans: ['Outfit', 'sans-serif'],},colors: {pastel: {bg: '#F8F9FA', card: '#FFFFFF', green: '#E6F4EA', greenText: '#1E8E3E', yellow: '#FEF7E0', yellowText: '#B06000', blue: '#E8F0FE', blueText: '#1A73E8'}}}}}</script>
@@ -579,6 +582,15 @@
             location.reload();
         });
         document.addEventListener('DOMContentLoaded', buscarDadosDaPlanilha);
+
+        // Registro do Service Worker para o PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registrado na raiz com sucesso!', reg.scope))
+                    .catch(err => console.log('Erro ao registrar SW:', err));
+            });
+        }
     </script>
 </body>
 
